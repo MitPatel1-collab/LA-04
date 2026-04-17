@@ -34,12 +34,13 @@ pipeline {
     }
 }
 
-        stage('Deploy to Kubernetes') {
-    	    steps {
-        	echo 'Deploying to Kubernetes...'
-        	sh "kubectl set image deployment/nginx-deployment nginx=${IMAGE_NAME}:${IMAGE_TAG} --record || true"
-    		}
-	}
+       stage('Deploy to Kubernetes') {
+    steps {
+        echo 'Deploying to Kubernetes...'
+        sh "kubectl set image deployment/nginx-deployment nginx=${IMAGE_NAME}:${IMAGE_TAG}"
+        sh "kubectl get pods"
+    }
+}
 
         stage('Verify Deployment') {
             steps {
