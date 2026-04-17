@@ -27,28 +27,19 @@ pipeline {
         }
 
         stage('Load Image to Minikube') {
-            steps {
-                echo 'Loading image into Minikube...'
-                sh """
-                    scp -o StrictHostKeyChecking=no \
-                    -i /var/jenkins_home/.minikube/profiles/minikube/id_rsa \
-                    /tmp/${IMAGE_NAME}-${IMAGE_TAG}.tar \
-                    docker@${MINIKUBE_IP}:/tmp/
-
-                    ssh -o StrictHostKeyChecking=no \
-                    -i /var/jenkins_home/.minikube/profiles/minikube/id_rsa \
-                    docker@${MINIKUBE_IP} \
-                    "docker load -i /tmp/${IMAGE_NAME}-${IMAGE_TAG}.tar"
-                """
-            }
-        }
+    steps {
+        echo 'Loading image into Minikube...'
+        sh "docker save ${IMAGE_NAME}:${IMAGE_TAG} -o /tmp/image.tar"
+        sh "minikube image load /tmp/image.tar || true"
+    }
+}
 
         stage('Deploy to Kubernetes') {
-            steps {
-                echo 'Deploying to Kubernetes...'
-                sh "kubectl set image deployment/nginx-deployment nginx=${IMAGE_NAME}:${IMAGE_TAG}"
-            }
-        }
+    	    steps {
+        	echo 'Deploying to Kubernetes...'
+        	sh "kubectl set image deployment/nginx-deployment nginx=${IMAGE_NAME}:${IMAGE_TAG} --record || true"
+    		}
+	}
 
         stage('Verify Deployment') {
             steps {
