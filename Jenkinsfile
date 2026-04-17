@@ -18,38 +18,30 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo "Building Docker image ${IMAGE_NAME}:${IMAGE_TAG}"
-                sh """
-                    docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
-                """
+                sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
             }
         }
 
         stage('Deploy to Kubernetes') {
             steps {
                 echo 'Deploying to Kubernetes...'
-                sh """
-                    kubectl set image deployment/nginx-deployment \
-                    nginx=${IMAGE_NAME}:${IMAGE_TAG}
-                    
-                    kubectl rollout status deployment/nginx-deployment
-                """
+                sh "kubectl set image deployment/nginx-deployment nginx=${IMAGE_NAME}:${IMAGE_TAG}"
+                sh "kubectl rollout status deployment/nginx-deployment"
             }
         }
 
         stage('Verify Deployment') {
             steps {
-                echo 'Verifying deployment...'
-                sh """
-                    kubectl get pods
-                    kubectl get deployments
-                """
+                echo 'Verifying...'
+                sh "kubectl get pods"
+                sh "kubectl get deployments"
             }
         }
     }
 
     post {
         success {
-            echo "Pipeline completed successfully! Image: ${IMAGE_NAME}:${IMAGE_TAG}"
+            echo "Pipeline succeeded! Image: ${IMAGE_NAME}:${IMAGE_TAG}"
         }
         failure {
             echo 'Pipeline failed!'
