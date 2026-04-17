@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment UI</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            background-color: #f4f6f9;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 220px;
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+        }
+
+        .sidebar a:hover {
+            background: #34495e;
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .navbar input {
+            padding: 8px;
+            width: 200px;
+        }
+
+        /* Content Area */
+        .content {
+            padding: 20px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+        }
+
+        /* Button */
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            background: #3498db;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+        }
+
+        /* Responsive */
+        @media(max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>My App</h2>
+        <a href="#">Dashboard</a>
+        <a href="#">Analytics</a>
+        <a href="#">Projects</a>
+        <a href="#">Settings</a>
+    </div>
+
+    <!-- Main -->
+    <div class="main">
+
+        <!-- Navbar -->
+        <div class="navbar">
+            <h3>Dashboard</h3>
+            <input type="text" placeholder="Search...">
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="cards">
+                
+                <div class="card">
+                    <h3>Users</h3>
+                    <p>1200 Active Users</p>
+                    <button class="btn">View</button>
+                </div>
+
+                <div class="card">
+                    <h3>Projects</h3>
+                    <p>45 Ongoing Projects</p>
+                    <button class="btn">View</button>
+                </div>
+
+                <div class="card">
+                    <h3>Revenue</h3>
+                    <p>$12,500</p>
+                    <button class="btn">Details</button>
+                </div>
+
+                <div class="card">
+                    <h3>Performance</h3>
+                    <p>Good</p>
+                    <button class="btn">Check</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
